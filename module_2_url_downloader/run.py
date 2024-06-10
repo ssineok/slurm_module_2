@@ -5,6 +5,8 @@ import logging
 import time
 import os
 
+start = time.time()
+
 FILE_NAME = 'customs_data.csv'
 
 def init_logging(level):
@@ -19,12 +21,15 @@ def check_url(url):
             return False
 
 if __name__ == "__main__":
+    # Init output file
+    current_dir = os.path.dirname(__file__)
+
     parser = argparse.ArgumentParser(description='Donwload the data from api and save it to the local csv file')
     parser.add_argument('-u', '--url', type=str,
                     help='API web address and port')
     parser.add_argument('-w', '--wait', type=int,
                     help='Waiting time in seconds when getting throttling error message from api')
-    parser.add_argument('-o', '--output', type=str,
+    parser.add_argument('-o', '--output', type=str, default=current_dir,
                     help='Output csv file path')
     parser.add_argument('-p', '--page', type=int, default=1,
                     help='Initial page number to download. Default is 1. If a page number is not 1 then Output csv file wont be overwriten')
@@ -33,8 +38,6 @@ if __name__ == "__main__":
 
     # Parse args
     args = parser.parse_args()
-
-    start = time.time()
 
     # Init logging
     init_logging(args.level)
