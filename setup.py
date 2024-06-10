@@ -14,7 +14,7 @@ def find_requires():
 if __name__ == "__main__":
     setup(
        name="module_2_url_downloader",
-       version="0.0.1",
+       version="0.0.2",
        description='Package downloads pages from url and saves them to local csv file',
        packages=find_packages(),
        install_requires=find_requires(),

@@ -20,9 +20,9 @@ def check_url(url):
         else:
             return False
 
-if __name__ == "__main__":
+def main():
     # Init output file
-    current_dir = os.path.dirname(__file__)
+    current_dir = os.getcwd()
 
     parser = argparse.ArgumentParser(description='Donwload the data from api and save it to the local csv file')
     parser.add_argument('-u', '--url', type=str,
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     if page_number == 1 and os.path.exists(f"{args.output}\{FILE_NAME}"):
         os.remove(f"{args.output}\{FILE_NAME}")
         
-    while page_number < 10:
+    while True:
         if check_url(args.url):
             logger.debug(f"{args.url} is available")
             next_page_url = f"{args.url}?page={str(page_number)}"
@@ -69,7 +69,7 @@ if __name__ == "__main__":
                         header = False
                     
                     items.to_csv(f"{args.output}\{FILE_NAME}", encoding='utf-8', index=False, mode='a', sep ='\t', header=header)
-                    logger.debug(f"Page with number {page_number} downloaded successfully")
+                    logger.debug(f"Page with number {page_number} downloaded and added to {args.output}\{FILE_NAME}")
                     page_number += 1
                 else:
                     logger.debug(f"All pages donwloaded from {args.url}. Last page number: {page_number}")
@@ -82,3 +82,6 @@ if __name__ == "__main__":
         else:
             logger.debug(f"Waiting for throttling timeout: {args.wait} sec")
             time.sleep(args.wait)
+
+if __name__ == "__main__":
+    main()
