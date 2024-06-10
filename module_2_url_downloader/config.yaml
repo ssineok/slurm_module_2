@@ -1,0 +1,3 @@
+url: http://5.159.103.79:4000/api/v1/logs
+wait: 180
+file_name: customs_data.csv
